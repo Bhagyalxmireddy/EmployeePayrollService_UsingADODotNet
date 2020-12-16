@@ -7,6 +7,8 @@ namespace Employee_PayRoll_Service
         static void Main(string[] args)
         {
             Console.WriteLine("WelCome to EmployeePayroll");
+            EmployeeRepo repo = new EmployeeRepo();
+            repo.getAllEmployees();
         }
     }
 }
