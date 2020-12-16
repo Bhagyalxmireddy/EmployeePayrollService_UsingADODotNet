@@ -29,7 +29,7 @@ namespace Employee_PayRoll_Service
                         {
                             model.Employee_ID = dataReader.GetInt32(0);
                             model.Name = dataReader.GetString(1);
-                              model.Gender = dataReader.GetString(2);
+                            model.Gender = dataReader.GetString(2);
                             model.PhoneNumber = dataReader.GetString(3);
                             model.Address = dataReader.GetString(4);
                             model.StartDate = dataReader.GetDateTime(5);
@@ -52,6 +52,45 @@ namespace Employee_PayRoll_Service
                     }
                     dataReader.Close();
                     this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
+        public bool addEmployee(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand command = new SqlCommand("spAddEmployeeDetails", this.connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Name", model.Name);
+                    command.Parameters.AddWithValue("@Gender", model.Gender);
+                    command.Parameters.AddWithValue("@PhoneNumber", model.PhoneNumber);
+                    command.Parameters.AddWithValue("@Address", model.Address);
+                    command.Parameters.AddWithValue("@StartDate", model.StartDate);
+                    command.Parameters.AddWithValue("@Department", model.Department);
+                    command.Parameters.AddWithValue("@Basic_Pay", model.Basic_Pay);
+                    command.Parameters.AddWithValue("@Deductions", model.Deductions);
+                    command.Parameters.AddWithValue("@IncomeTax", model.IncomeTax);
+                    command.Parameters.AddWithValue("@TaxablePay", model.TaxablePay);
+                    command.Parameters.AddWithValue("@NetPay", model.NetPay);
+          
+                    this.connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    if (!result.Equals(0))
+                    {
+                        return true;
+                    }
+                    return false;
                 }
             }
             catch (Exception e)
