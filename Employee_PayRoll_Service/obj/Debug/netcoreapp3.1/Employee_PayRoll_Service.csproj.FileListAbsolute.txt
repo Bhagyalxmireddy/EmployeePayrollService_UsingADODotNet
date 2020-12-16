@@ -1,0 +1,13 @@
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\bin\Debug\netcoreapp3.1\Employee_PayRoll_Service.exe
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\bin\Debug\netcoreapp3.1\Employee_PayRoll_Service.deps.json
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\bin\Debug\netcoreapp3.1\Employee_PayRoll_Service.runtimeconfig.json
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\bin\Debug\netcoreapp3.1\Employee_PayRoll_Service.runtimeconfig.dev.json
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\bin\Debug\netcoreapp3.1\Employee_PayRoll_Service.dll
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\bin\Debug\netcoreapp3.1\Employee_PayRoll_Service.pdb
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\obj\Debug\netcoreapp3.1\Employee_PayRoll_Service.csprojAssemblyReference.cache
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\obj\Debug\netcoreapp3.1\Employee_PayRoll_Service.AssemblyInfoInputs.cache
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\obj\Debug\netcoreapp3.1\Employee_PayRoll_Service.AssemblyInfo.cs
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\obj\Debug\netcoreapp3.1\Employee_PayRoll_Service.csproj.CoreCompileInputs.cache
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\obj\Debug\netcoreapp3.1\Employee_PayRoll_Service.dll
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\obj\Debug\netcoreapp3.1\Employee_PayRoll_Service.pdb
+C:\Users\USER\source\repos\Employee_PayRoll_Service\Employee_PayRoll_Service\obj\Debug\netcoreapp3.1\Employee_PayRoll_Service.genruntimeconfig.cache
