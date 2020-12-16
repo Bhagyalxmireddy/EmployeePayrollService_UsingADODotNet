@@ -10,7 +10,7 @@ namespace Employee_PayRoll_Service
             EmployeeRepo repo = new EmployeeRepo();
             EmployeeModel model = new EmployeeModel();
 
-             repo.getAllEmployees();
+            // repo.getAllEmployees();
 
             /* model.Name = "Akshay";
              model.Gender = "M";
@@ -25,12 +25,10 @@ namespace Employee_PayRoll_Service
              model.NetPay = 80000;*/
             // repo.addEmployee(model);
 
-           /* model.Name = "Akshay";
-            model.Address = "Jadcharla";
-            repo.updateEmployee(model);*/
-
-
-
+            /* model.Name = "Akshay";
+             model.Address = "Jadcharla";
+             repo.updateEmployee(model);*/
+            repo.getEmployeesInRangeByDate();
 
         }
     }
