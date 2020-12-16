@@ -34,5 +34,12 @@ namespace Employee_Payroll_Test
             bool result = employeeRepo.updateEmployee(Model);
             Assert.IsTrue(result);
         }
+        [TestMethod]
+        public void deletingEmployeeFromTable_shouldReturnTrue()
+        {
+            Model.Name = "Pravalika";
+            bool result = employeeRepo.delteThePerson(Model);
+            Assert.IsTrue(result);
+        }
     }
 }
