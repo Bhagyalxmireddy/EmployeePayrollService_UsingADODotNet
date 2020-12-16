@@ -33,7 +33,7 @@ namespace Employee_PayRoll_Service
                             model.PhoneNumber = dataReader.GetString(3);
                             model.Address = dataReader.GetString(4);
                             model.StartDate = dataReader.GetDateTime(5);
-                            model.Department = dataReader.GetString(6);                          
+                            model.Department = dataReader.GetString(6);
                             model.Basic_Pay = dataReader.GetDouble(7);
                             model.Deductions = dataReader.GetDouble(8);
                             model.TaxablePay = dataReader.GetDouble(9);
@@ -41,8 +41,8 @@ namespace Employee_PayRoll_Service
                             model.NetPay = dataReader.GetDouble(11);
                             Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
                                 model.Employee_ID, model.Name, model.Gender,
-                                model.PhoneNumber, model.Address,model.StartDate, model.Department,model.Basic_Pay,
-                                model.Deductions,model.TaxablePay,model.IncomeTax,model.NetPay);
+                                model.PhoneNumber, model.Address, model.StartDate, model.Department, model.Basic_Pay,
+                                model.Deductions, model.TaxablePay, model.IncomeTax, model.NetPay);
                             Console.WriteLine("\n");
                         }
                     }
@@ -83,7 +83,7 @@ namespace Employee_PayRoll_Service
                     command.Parameters.AddWithValue("@IncomeTax", model.IncomeTax);
                     command.Parameters.AddWithValue("@TaxablePay", model.TaxablePay);
                     command.Parameters.AddWithValue("@NetPay", model.NetPay);
-          
+
                     this.connection.Open();
                     var result = command.ExecuteNonQuery();
                     if (!result.Equals(0))
@@ -121,7 +121,8 @@ namespace Employee_PayRoll_Service
                     return false;
 
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -171,7 +172,199 @@ namespace Employee_PayRoll_Service
                     dataReader.Close();
                     this.connection.Close();
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        public void sumOfsalaryByGender()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    string query = @"Select Gender,SUM(Basic_Pay) as Sumsalary from Employee_Payroll group by Gender";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Gender = dataReader.GetString(0);
+                            model.Basic_Pay = dataReader.GetDouble(1);
+                            Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        public void avgOfsalaryByGender()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    string query = @"Select Gender,AVG(Basic_Pay) from Employee_Payroll group by Gender";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Gender = dataReader.GetString(0);
+                            model.Basic_Pay = dataReader.GetDouble(1);
+                            Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        public void MinOfsalaryByGender()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                SqlConnection connection = new SqlConnection(connectionString);
+                using (this.connection)
+                {
+                    string query = @"Select Gender,MIN(Basic_Pay) from Employee_Payroll group by Gender";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Gender = dataReader.GetString(0);
+                            model.Basic_Pay = dataReader.GetDouble(1);
+                            Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+
+        }
+        public void MaxOfsalaryByGender()
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    string query = @"Select Gender,MAX(Basic_Pay) from Employee_Payroll group by Gender";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Gender = dataReader.GetString(0);
+                            model.Basic_Pay = dataReader.GetDouble(1);
+                            Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        public void countOfsalaryByGender()
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    string query = @"Select Gender,COUNT(Gender) from Employee_Payroll group by Gender";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            Console.WriteLine(dataReader.GetString(0) + "\t");
+                            Console.WriteLine(dataReader.GetInt32(1));
+                           /* model.Gender = dataReader.GetString(0);
+                            model.Employee_ID = dataReader.GetInt32(1);
+                            Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);*/
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }

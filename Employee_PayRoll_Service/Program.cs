@@ -28,8 +28,12 @@ namespace Employee_PayRoll_Service
             /* model.Name = "Akshay";
              model.Address = "Jadcharla";
              repo.updateEmployee(model);*/
-            repo.getEmployeesInRangeByDate();
-
+            // repo.getEmployeesInRangeByDate();
+            //repo.sumOfsalaryByGender();
+           // repo.avgOfsalaryByGender();
+            //repo.MaxOfsalaryByGender();
+           // repo.MinOfsalaryByGender();
+            repo.countOfsalaryByGender();
         }
     }
 }
