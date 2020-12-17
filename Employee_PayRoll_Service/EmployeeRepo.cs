@@ -138,7 +138,7 @@ namespace Employee_PayRoll_Service
                 EmployeeModel model = new EmployeeModel();
                 using (this.connection)
                 {
-                    string query = @"Select * from Employee_Payroll WHERE StartDate BETWEEN CAST('2015-03-01' AS DATE) AND GETDATE()";
+                    string query = @"Select * from Payroll WHERE StartDate BETWEEN CAST('2015-03-01' AS DATE) AND GETDATE()";
                     SqlCommand command = new SqlCommand(query, this.connection);
                     this.connection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
@@ -189,7 +189,8 @@ namespace Employee_PayRoll_Service
                 EmployeeModel model = new EmployeeModel();
                 using (this.connection)
                 {
-                    string query = @"Select Gender,SUM(Basic_Pay) as Sumsalary from Employee_Payroll group by Gender";
+                    string query = @"Select Gender,SUM(Payroll.Basic_Pay) as Sum_salary from Payroll payroll inner join Employee emp 
+                        on payroll.Employee_id = emp.Employee_id  group by Gender";
                     SqlCommand command = new SqlCommand(query, this.connection);
                     this.connection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
@@ -221,14 +222,16 @@ namespace Employee_PayRoll_Service
         }
         public void avgOfsalaryByGender()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
                 EmployeeModel model = new EmployeeModel();
-                using (this.connection)
+                using (connection)
                 {
-                    string query = @"Select Gender,AVG(Basic_Pay) from Employee_Payroll group by Gender";
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open();
+                    string query = @"Select Gender,AVG(Payroll.Basic_Pay) as Max_Pay from Payroll payroll inner join Employee emp
+                                    on payroll.Employee_id = emp.Employee_id group by Gender";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.HasRows)
                     {
@@ -258,15 +261,16 @@ namespace Employee_PayRoll_Service
         }
         public void MinOfsalaryByGender()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
                 EmployeeModel model = new EmployeeModel();
-                SqlConnection connection = new SqlConnection(connectionString);
-                using (this.connection)
+                using (connection)
                 {
-                    string query = @"Select Gender,MIN(Basic_Pay) from Employee_Payroll group by Gender";
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open();
+                    string query = @"Select Gender,MIN(Payroll.Basic_Pay) as Max_Pay from Payroll payroll inner join Employee emp
+                                    on payroll.Employee_id = emp.Employee_id group by Gender";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.HasRows)
                     {
@@ -297,15 +301,16 @@ namespace Employee_PayRoll_Service
         }
         public void MaxOfsalaryByGender()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                SqlConnection connection = new SqlConnection(connectionString);
                 EmployeeModel model = new EmployeeModel();
-                using (this.connection)
+                using (connection)
                 {
-                    string query = @"Select Gender,MAX(Basic_Pay) from Employee_Payroll group by Gender";
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open();
+                    string query = @"Select Gender,MAX(Payroll.Basic_Pay) as Max_Pay from Payroll payroll inner join Employee emp
+                                    on payroll.Employee_id = emp.Employee_id group by Gender";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.HasRows)
                     {
@@ -335,15 +340,16 @@ namespace Employee_PayRoll_Service
         }
         public void countOfsalaryByGender()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
-            {
-                SqlConnection connection = new SqlConnection(connectionString);
+            {        
                 EmployeeModel model = new EmployeeModel();
-                using (this.connection)
+                using (connection)
                 {
-                    string query = @"Select Gender,COUNT(Gender) from Employee_Payroll group by Gender";
-                    SqlCommand command = new SqlCommand(query, this.connection);
-                    this.connection.Open();
+                    string query = @"Select Gender,COUNT(Payroll.Basic_Pay) as Max_Pay from Payroll payroll inner join Employee emp
+                                    on payroll.Employee_id = emp.Employee_id group by Gender"; 
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
                     SqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.HasRows)
                     {
@@ -505,6 +511,51 @@ namespace Employee_PayRoll_Service
             {
                 this.connection.Close();
             }
+        }
+        public void retreveThe_EmployeeDetails()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    string query = @"SELECT Employee_id,Name,Gender,PhoneNumber,Address
+                                    FROM Employee";
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Employee_id = dataReader.GetInt32(0);
+                            model.Name = dataReader.GetString(1);
+                            model.Gender = Convert.ToChar(dataReader.GetString(2));
+                            model.PhoneNumber = dataReader.GetString(3);
+                            model.Address = dataReader.GetString(4);
+                            Console.WriteLine("{0},{1},{2},{3},{4}",
+                                model.Employee_id, model.Name, model.Gender,
+                                model.PhoneNumber, model.Address);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data is found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+
         }
     }
 }

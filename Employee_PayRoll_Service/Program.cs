@@ -10,6 +10,68 @@ namespace Employee_PayRoll_Service
             EmployeeRepo repo = new EmployeeRepo();
             EmployeeModel model = new EmployeeModel();
 
+            bool i = true;
+            while (i)
+            {
+                Console.WriteLine("1.SumOfBasicSalaryByGender");
+                Console.WriteLine("2.AvgOfBasicSalaryByGender");
+                Console.WriteLine("3.MinOfBasicSalaryByGender");
+                Console.WriteLine("4.MaxOfBasicSalaryByGender");
+                Console.WriteLine("5.CountOfBasicSalaryByGender");
+                Console.WriteLine("6.Exit");
+                try
+                {
+                    int choice = Convert.ToInt32(Console.ReadLine());
+                    switch (choice)
+                    {
+                        case 1:
+                            repo.sumOfsalaryByGender();
+                            break;
+                        case 2:
+                            repo.avgOfsalaryByGender();
+                            break;
+                        case 3:
+                            repo.MinOfsalaryByGender();
+                            break;
+                        case 4:
+                            repo.MaxOfsalaryByGender();
+                            break;
+                        case 5:
+                            repo.countOfsalaryByGender();
+                            break;
+                        case 6:
+                            i = false;
+                            break;
+                        default:
+                            Console.WriteLine("Choose proper option");
+                            break;
+                    }
+                }
+                catch(System.FormatException formatException)
+                {
+                    Console.WriteLine(formatException);
+                }
+            }
+           
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             // repo.getAllEmployees();
 
             /* model.Name = "Akshay";
@@ -30,10 +92,11 @@ namespace Employee_PayRoll_Service
              repo.updateEmployee(model);*/
             // repo.getEmployeesInRangeByDate();
             //repo.sumOfsalaryByGender();
-           // repo.avgOfsalaryByGender();
+            // repo.avgOfsalaryByGender();
             //repo.MaxOfsalaryByGender();
-           // repo.MinOfsalaryByGender();
-            repo.countOfsalaryByGender();
+            //repo.MinOfsalaryByGender();
+            //repo.countOfsalaryByGender();
+            //repo.retreveThe_EmployeeDetails();
         }
     }
 }
