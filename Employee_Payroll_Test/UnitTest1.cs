@@ -72,5 +72,18 @@ namespace Employee_Payroll_Test
             bool result = employeeRepo.AddingToEmployeeDepartment(Model);
             Assert.IsTrue(result);
         }
+        [TestMethod]
+        public void addingDetailsToMultipleTables_WithSingleTransaction_ShouldRetrunTure()
+        {
+            Model.Name = "Sri Vani";
+            Model.Gender = 'F';
+            Model.PhoneNumber = "9630124857";
+            Model.Address = "kukatpally";
+            Model.Basic_Pay = 50000.00;
+            Model.StartDate = new DateTime(2016, 11, 12);
+            Model.Department_id = 3;
+            bool result = employeeRepo.AddEmployeeDetailsToMultipleTables(Model);
+            Assert.IsTrue(result);
+        }
     }
 }
