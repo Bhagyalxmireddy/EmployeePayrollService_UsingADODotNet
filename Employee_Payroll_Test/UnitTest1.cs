@@ -13,7 +13,7 @@ namespace Employee_Payroll_Test
         public void AddingEmployeeDetails_ShouldReturnTrue()
         {
             Model.Name = "Pravalika";
-            Model.Gender = "F";
+            Model.Gender = 'F';
             Model.PhoneNumber = "8741023659";
             Model.Address = "Ngkl";
             Model.StartDate = new DateTime(2019, 02, 09);
@@ -32,6 +32,44 @@ namespace Employee_Payroll_Test
             Model.Name = "Pravalika";
             Model.Address = "Dsnr";
             bool result = employeeRepo.updateEmployee(Model);
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void addEmployeeDetails_ReturnTrue()
+        {
+            Model.Name = "Priyanka";
+            Model.Gender = 'F';
+            Model.PhoneNumber = "9874103256";
+            Model.Address = "DSNR";
+            bool result = employeeRepo.AddingEmployeeDetails(Model);
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void addPayrollDetails_ReturnTrue()
+        {
+            Model.Employee_id = 4;
+            Model.StartDate = new DateTime(2018, 08, 19);
+            Model.Basic_Pay = 60000.00;
+            Model.Deduction = 2000.00;
+            Model.TaxablePay = 1243.00;
+            Model.IncomeTax = 7000.00;
+            Model.NetPay = 50000.00;
+            bool result = employeeRepo.AddingPayRollDetails(Model);
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void addDepartmentDetails_ReturnTrue()
+        {
+            Model.Department = "HR";
+            bool result = employeeRepo.AddingDepartment(Model);
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void addEmployeeDepartment_shouldReturnTrue()
+        {
+            Model.Employee_id = 5;
+            Model.Department_id = 1;
+            bool result = employeeRepo.AddingToEmployeeDepartment(Model);
             Assert.IsTrue(result);
         }
     }

@@ -29,7 +29,7 @@ namespace Employee_PayRoll_Service
                         {
                             model.Employee_ID = dataReader.GetInt32(0);
                             model.Name = dataReader.GetString(1);
-                            model.Gender = dataReader.GetString(2);
+                            model.Gender = Convert.ToChar(dataReader.GetString(2));
                             model.PhoneNumber = dataReader.GetString(3);
                             model.Address = dataReader.GetString(4);
                             model.StartDate = dataReader.GetDateTime(5);
@@ -148,7 +148,7 @@ namespace Employee_PayRoll_Service
                         {
                             model.Employee_ID = dataReader.GetInt32(0);
                             model.Name = dataReader.GetString(1);
-                            model.Gender = dataReader.GetString(2);
+                            model.Gender = Convert.ToChar(dataReader.GetString(2));
                             model.PhoneNumber = dataReader.GetString(3);
                             model.Address = dataReader.GetString(4);
                             model.StartDate = dataReader.GetDateTime(5);
@@ -197,7 +197,7 @@ namespace Employee_PayRoll_Service
                     {
                         while (dataReader.Read())
                         {
-                            model.Gender = dataReader.GetString(0);
+                            model.Gender = Convert.ToChar( dataReader.GetString(0));
                             model.Basic_Pay = dataReader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -234,7 +234,7 @@ namespace Employee_PayRoll_Service
                     {
                         while (dataReader.Read())
                         {
-                            model.Gender = dataReader.GetString(0);
+                            model.Gender = Convert.ToChar(dataReader.GetString(0));
                             model.Basic_Pay = dataReader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -272,7 +272,7 @@ namespace Employee_PayRoll_Service
                     {
                         while (dataReader.Read())
                         {
-                            model.Gender = dataReader.GetString(0);
+                            model.Gender = Convert.ToChar(dataReader.GetString(0));
                             model.Basic_Pay = dataReader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -311,7 +311,7 @@ namespace Employee_PayRoll_Service
                     {
                         while (dataReader.Read())
                         {
-                            model.Gender = dataReader.GetString(0);
+                            model.Gender = Convert.ToChar(dataReader.GetString(0));
                             model.Basic_Pay = dataReader.GetDouble(1);
                             Console.WriteLine("{0},{1}", model.Gender, model.Basic_Pay);
                         }
@@ -362,6 +362,139 @@ namespace Employee_PayRoll_Service
                     }
                     dataReader.Close();
                     this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
+        public bool AddingEmployeeDetails(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("spAddEmployee", this.connection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Name", model.Name);
+                    sqlCommand.Parameters.AddWithValue("@Gender", model.Gender);
+                    sqlCommand.Parameters.AddWithValue("@PhoneNumber", model.PhoneNumber);
+                    sqlCommand.Parameters.AddWithValue("@Address", model.Address);
+                    this.connection.Open();
+                    var result = sqlCommand.ExecuteNonQuery();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        public bool AddingPayRollDetails(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("spPayrollEmployee", this.connection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@employee_id", model.Employee_id);
+                    sqlCommand.Parameters.AddWithValue("@StartDate", model.StartDate);
+                    sqlCommand.Parameters.AddWithValue("@Basic_Pay", model.Basic_Pay);
+                    sqlCommand.Parameters.AddWithValue("@Deduction", model.Deduction);
+                    sqlCommand.Parameters.AddWithValue("@IncomeTax", model.IncomeTax);
+                    sqlCommand.Parameters.AddWithValue("@TaxablePay", model.TaxablePay);
+                    sqlCommand.Parameters.AddWithValue("@NetPay", model.NetPay);
+
+                    this.connection.Open();
+                    var result = sqlCommand.ExecuteNonQuery();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        public bool AddingDepartment(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("spDepartment", this.connection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Department", model.Department);
+                    this.connection.Open();
+                    var result = sqlCommand.ExecuteNonQuery();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        public bool AddingToEmployeeDepartment(EmployeeModel model)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("spEmployeeDepartment", this.connection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Employee_id", model.Employee_id);
+                    sqlCommand.Parameters.AddWithValue("@Department_id", model.Department_id);
+                    this.connection.Open();
+                    var result = sqlCommand.ExecuteNonQuery();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             catch (Exception e)
