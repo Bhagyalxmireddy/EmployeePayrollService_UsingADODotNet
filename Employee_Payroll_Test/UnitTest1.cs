@@ -86,7 +86,7 @@ namespace Employee_Payroll_Test
             return models;
         }
         [TestMethod]
-        public void AddingToListWithout_Threading()
+        public void AddingToDBWithout_Threading()
         {
             List<EmployeeModel> listModel = AddingDataToList();
             bool expected = true;
@@ -98,5 +98,61 @@ namespace Employee_Payroll_Test
             Console.WriteLine("Time taken to add to db without threads is :{0} ms", stopwatch.ElapsedMilliseconds);
             Assert.AreEqual(expected, actual);
         }
-     }
+        [TestMethod]
+        public void AddingToDBWith_Threading()
+        {
+            List<EmployeeModel> Models = AddingDataToList();
+            bool expected = true;
+            EmployeePayRollOperations payRollOperations = new EmployeePayRollOperations();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            bool actual = payRollOperations.AddEmployeesToDBWithThread(Models);
+            stopwatch.Stop();
+            Console.WriteLine("Time taken to add to db without threads is :{0} ms", stopwatch.ElapsedMilliseconds);
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void AddingToList_WithOutThearding()
+        {
+            List<EmployeeModel> Models = AddingDataToList();
+            EmployeePayRollOperations payRollOperations = new EmployeePayRollOperations();
+            DateTime startTime = DateTime.Now;
+            payRollOperations.AddEmployeePayroll(Models);
+            DateTime stopTime = DateTime.Now;
+            Console.WriteLine("Duration without thread ;" + (stopTime - startTime));
+        }
+        [TestMethod]
+        public void AddingToList_WithThearding()
+        {
+            List<EmployeeModel> Models = AddingDataToList();
+            EmployeePayRollOperations payRollOperations = new EmployeePayRollOperations();
+            DateTime startTimeThread = DateTime.Now;
+            payRollOperations.AddEmployeePayrollwithTheard(Models);
+            DateTime stopTimethread = DateTime.Now;
+            Console.WriteLine("Duration without thread ;" + (stopTimethread - startTimeThread));
+        }
+        public List<EmployeeModel> updateList()
+        {
+            List<EmployeeModel> upadateList = new List<EmployeeModel>();
+            upadateList.Add(new EmployeeModel { Employee_id = 1, Address = "HYD" });
+            upadateList.Add(new EmployeeModel { Employee_id = 2, Address = "MBNR" });
+            upadateList.Add(new EmployeeModel { Employee_id = 3, Address = "JCL" });
+            return upadateList;
+
+        }
+        [TestMethod]
+        public void updateToDB_WithThreading()
+        {
+            List<EmployeeModel> models = updateList();
+            bool expected = true;
+            EmployeePayRollOperations payRollOperations = new EmployeePayRollOperations();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            bool actual = payRollOperations.UpdateMultipleEmployeeToDBWithThreading(models);
+            stopwatch.Stop();
+            Console.WriteLine("Time taken to add to db without threads is :{0} ms", stopwatch.ElapsedMilliseconds);
+            Assert.AreEqual(expected, actual);
+
+        }
+    }
 }

@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using System.Threading;
 
 namespace Employee_PayRoll_Service
 {
@@ -63,6 +64,21 @@ namespace Employee_PayRoll_Service
             }
             return true;
         }
+        public bool AddEmployeesToDBWithThread(List<EmployeeModel> models)
+        {
+            bool result = false;
+            models.ForEach(employee =>
+            {
+                Task thread = new Task(() =>
+                {
+                    result = addEmployee(employee);
+                    Console.WriteLine("Employee added" + employee.Name);
+                });
+                thread.Start();
+            });
+            return result;
+
+        }
 
 
         public List<EmployeeModel> listemployeeModel = new List<EmployeeModel>();
@@ -96,6 +112,22 @@ namespace Employee_PayRoll_Service
                 thread.Start();
             });
             Console.WriteLine(this.listemployeeModel.Count);
+        }
+        public bool UpdateMultipleEmployeeToDBWithThreading(List<EmployeeModel> models)
+        {
+            EmployeeRepo repo = new EmployeeRepo();
+            bool result = false;
+            models.ForEach(employee =>
+            {
+                Thread thread = new Thread(() =>
+                {
+                    result = repo.updateEmployee(employee);
+                    Console.WriteLine("Employee added" + employee.Name);
+                });
+                thread.Start();
+                thread.Join();
+            });
+            return result;
         }
 
     }
