@@ -1,6 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Employee_PayRoll_Service;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Employee_Payroll_Test
 {
@@ -45,19 +47,6 @@ namespace Employee_Payroll_Test
             Assert.IsTrue(result);
         }
         [TestMethod]
-        public void addPayrollDetails_ReturnTrue()
-        {
-            Model.Employee_id = 4;
-            Model.StartDate = new DateTime(2018, 08, 19);
-            Model.Basic_Pay = 60000.00;
-            Model.Deduction = 2000.00;
-            Model.TaxablePay = 1243.00;
-            Model.IncomeTax = 7000.00;
-            Model.NetPay = 50000.00;
-            bool result = employeeRepo.AddingPayRollDetails(Model);
-            Assert.IsTrue(result);
-        }
-        [TestMethod]
         public void addDepartmentDetails_ReturnTrue()
         {
             Model.Department = "HR";
@@ -85,5 +74,29 @@ namespace Employee_Payroll_Test
             bool result = employeeRepo.AddEmployeeDetailsToMultipleTables(Model);
             Assert.IsTrue(result);
         }
-    }
+        public List<EmployeeModel> AddingDataToList()
+        {
+            List<EmployeeModel> models = new List<EmployeeModel>();
+
+            models.Add(new EmployeeModel() { Name = "Bhagya", Gender = 'F', PhoneNumber = "8965471023",Address = "Ngkl", StartDate= new DateTime(2017, 09, 14),Department = "Fianace", Basic_Pay = 20000,Deductions = 1234,IncomeTax = 632,TaxablePay = 500,NetPay = 120});
+            models.Add(new EmployeeModel() { Name = "Sravani", Gender = 'F', PhoneNumber = "8965471102", Address = "Vijayawada", StartDate = new DateTime(2017, 08, 24), Department = "Fianace", Basic_Pay = 80000, Deductions = 1234, IncomeTax = 632, TaxablePay = 500, NetPay = 120 });
+            models.Add(new EmployeeModel() { Name = "Akshay", Gender = 'M', PhoneNumber = "8965471021", Address = "hyd", StartDate = new DateTime(2018, 09, 11), Department = "Fianace", Basic_Pay = 20000, Deductions = 1234, IncomeTax = 632, TaxablePay = 500, NetPay = 120 });
+            models.Add(new EmployeeModel() { Name = "Teju", Gender = 'F', PhoneNumber = "8965471022", Address = "Jcl", StartDate = new DateTime(2019, 05, 19), Department = "Fianace", Basic_Pay = 40000, Deductions = 1234, IncomeTax = 632, TaxablePay = 500, NetPay = 120 });
+            models.Add(new EmployeeModel() { Name = "kiran", Gender = 'm', PhoneNumber = "8965471028", Address = "Jgl", StartDate = new DateTime(2015, 01, 17), Department = "Fianace", Basic_Pay = 30000, Deductions = 1234, IncomeTax = 632, TaxablePay = 500, NetPay = 120 });
+            return models;
+        }
+        [TestMethod]
+        public void AddingToListWithout_Threading()
+        {
+            List<EmployeeModel> listModel = AddingDataToList();
+            bool expected = true;
+            EmployeePayRollOperations payRollOperations = new EmployeePayRollOperations();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            bool actual = payRollOperations.AddMultipleElementToDB(listModel);
+            stopwatch.Stop();
+            Console.WriteLine("Time taken to add to db without threads is :{0} ms", stopwatch.ElapsedMilliseconds);
+            Assert.AreEqual(expected, actual);
+        }
+     }
 }
