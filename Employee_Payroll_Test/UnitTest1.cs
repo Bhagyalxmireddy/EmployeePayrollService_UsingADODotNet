@@ -85,12 +85,12 @@ namespace Employee_Payroll_Test
             models.Add(new EmployeeModel() { Name = "kiran", Gender = 'm', PhoneNumber = "8965471028", Address = "Jgl", StartDate = new DateTime(2015, 01, 17), Department = "Fianace", Basic_Pay = 30000, Deductions = 1234, IncomeTax = 632, TaxablePay = 500, NetPay = 120 });
             return models;
         }
+         public EmployeePayRollOperations payRollOperations = new EmployeePayRollOperations();
         [TestMethod]
         public void AddingToDBWithout_Threading()
         {
             List<EmployeeModel> listModel = AddingDataToList();
             bool expected = true;
-            EmployeePayRollOperations payRollOperations = new EmployeePayRollOperations();
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             bool actual = payRollOperations.AddMultipleElementToDB(listModel);
@@ -103,7 +103,6 @@ namespace Employee_Payroll_Test
         {
             List<EmployeeModel> Models = AddingDataToList();
             bool expected = true;
-            EmployeePayRollOperations payRollOperations = new EmployeePayRollOperations();
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             bool actual = payRollOperations.AddEmployeesToDBWithThread(Models);
@@ -115,7 +114,6 @@ namespace Employee_Payroll_Test
         public void AddingToList_WithOutThearding()
         {
             List<EmployeeModel> Models = AddingDataToList();
-            EmployeePayRollOperations payRollOperations = new EmployeePayRollOperations();
             DateTime startTime = DateTime.Now;
             payRollOperations.AddEmployeePayroll(Models);
             DateTime stopTime = DateTime.Now;
@@ -125,7 +123,6 @@ namespace Employee_Payroll_Test
         public void AddingToList_WithThearding()
         {
             List<EmployeeModel> Models = AddingDataToList();
-            EmployeePayRollOperations payRollOperations = new EmployeePayRollOperations();
             DateTime startTimeThread = DateTime.Now;
             payRollOperations.AddEmployeePayrollwithTheard(Models);
             DateTime stopTimethread = DateTime.Now;
@@ -134,9 +131,9 @@ namespace Employee_Payroll_Test
         public List<EmployeeModel> updateList()
         {
             List<EmployeeModel> upadateList = new List<EmployeeModel>();
-            upadateList.Add(new EmployeeModel { Employee_id = 1, Address = "HYD" });
-            upadateList.Add(new EmployeeModel { Employee_id = 2, Address = "MBNR" });
-            upadateList.Add(new EmployeeModel { Employee_id = 3, Address = "JCL" });
+            upadateList.Add(new EmployeeModel { Name = "Bhagya", Address = "HYD" });
+            upadateList.Add(new EmployeeModel { Name = "Sravani", Address = "MBNR" });
+            upadateList.Add(new EmployeeModel { Name = "Akshay", Address = "JCL" });
             return upadateList;
 
         }
@@ -145,7 +142,6 @@ namespace Employee_Payroll_Test
         {
             List<EmployeeModel> models = updateList();
             bool expected = true;
-            EmployeePayRollOperations payRollOperations = new EmployeePayRollOperations();
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             bool actual = payRollOperations.UpdateMultipleEmployeeToDBWithThreading(models);

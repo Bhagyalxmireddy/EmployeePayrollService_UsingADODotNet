@@ -104,9 +104,10 @@ namespace Employee_PayRoll_Service
         }
         public bool updateEmployee(EmployeeModel model)
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
                     SqlCommand command = new SqlCommand("spUpdateEmployeeDetails", this.connection);
                     command.CommandType = CommandType.StoredProcedure;

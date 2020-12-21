@@ -11,14 +11,15 @@ namespace Employee_PayRoll_Service
     public class EmployeePayRollOperations
     {
         public static string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Payroll_Services;Integrated Security=True";
-        SqlConnection connection = new SqlConnection(connectionString);
+      
         public bool addEmployee(EmployeeModel model)
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
-                    SqlCommand command = new SqlCommand("spAddEmployeeDetails", this.connection);
+                    SqlCommand command = new SqlCommand("spAddEmployeeDetails", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Name", model.Name);
                     command.Parameters.AddWithValue("@Gender", model.Gender);
@@ -32,7 +33,7 @@ namespace Employee_PayRoll_Service
                     command.Parameters.AddWithValue("@TaxablePay", model.TaxablePay);
                     command.Parameters.AddWithValue("@NetPay", model.NetPay);
 
-                    this.connection.Open();
+                    connection.Open();
                     var result = command.ExecuteNonQuery();
                     if (!result.Equals(0))
                     {
@@ -47,7 +48,7 @@ namespace Employee_PayRoll_Service
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
         public bool AddMultipleElementToDB(List<EmployeeModel> Models)
